@@ -13,6 +13,9 @@ class TodosController extends AbstractController
      */
     public function index()
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+
         $todos = $this->getDoctrine()
             ->getRepository(Todo::class)
             ->findBy(['userId' => 1]);

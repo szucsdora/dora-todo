@@ -9,3 +9,10 @@ register:
 todos:
     path: /todos
     controller: App\Controller\TodosController::index
+
+login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+logout:
+    path: /logout
