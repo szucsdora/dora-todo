@@ -16,4 +16,13 @@ class RegisterController extends AbstractController
         return $this->render('register.twig', [
         ]);
     }
+    /**
+     * @Route("/registration/new", name="registration_new")
+     */
+    public function register()
+    {
+
+        return $this->render('register.twig', [
+        ]);
+    }
 }

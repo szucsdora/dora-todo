@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TodoRepository")
+ * @ORM\Table(name="todos")
  */
 class Todo
 {
@@ -25,13 +26,14 @@ class Todo
     }
      /**
       * @ORM\Column(type="integer", length=11, name="user_id"))
+      * @ORM\ManyToOne(targetEntity="User")
       */
     private $userId;
-    public function getuserId()
+    public function getUserId()
     {
       return $this->user_id;
     }
-    public function setuserName($user_id)
+    public function setUserName($user_id)
     {
         $this->userName = $user_name;
     }
@@ -39,23 +41,23 @@ class Todo
      * @ORM\Column(type="string", length=64, name="task_name")
      */
    private $taskName;
-   public function gettaskName()
+   public function getTaskName()
    {
-     return $this->task_name;
+     return $this->taskName;
    }
-   public function settaskName($task_name)
+   public function setTaskName($task_name)
     {
         $this->taskName = $task_name;
     }
    /**
-    * @ORM\Column(type="dateTime", name="deadline")
+    * @ORM\Column(type="datetime", name="date")
     */
   private $deadline;
-  public function getdeadline()
+  public function getDeadline()
   {
     return $this->deadline;
   }
-  public function setdeadline($deadline)
+  public function setDeadline($deadline)
     {
         $this->deadline = $deadline;
     }
@@ -63,12 +65,12 @@ class Todo
     * @ORM\Column(type="boolean", length=1, name="is_done")
     */
   private $isDone;
-  public function getisDone()
+  public function getIsDone()
   {
-    return $this->is_done;
+    return $this->isDone;
   }
-  public function setName($isDone)
+  public function setIsDone($isDone)
     {
-        $this->$isDone = $is_done;
+        $this->$isDone = $isDone;
     }
 }
