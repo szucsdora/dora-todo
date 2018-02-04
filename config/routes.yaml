@@ -4,7 +4,7 @@ index:
 
 register:
     path: /register
-    controller: App\Controller\RegisterController::index
+    controller: App\Controller\RegisterController::registerAction
 
 todos:
     path: /todos

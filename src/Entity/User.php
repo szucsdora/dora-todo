@@ -3,11 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="users")
+ * @UniqueEntity(fields="email", message="Email already taken")
+ * @UniqueEntity(fields="username", message="Username already taken")
  */
 class User implements UserInterface, \Serializable
 {
@@ -32,15 +36,16 @@ class User implements UserInterface, \Serializable
      private $fullName;
      public function getFullName()
     {
-        return $this->full_name;
+        return $this->fullName;
     }
 
-    public function setFullName($full_name)
+    public function setFullName($fullName)
     {
-        $this->fullName = $full_name;
+        $this->fullName = $fullName;
     }
     /**
-    * @ORM\Column(type="string", length=32, name="user_name")
+    * @ORM\Column(type="string", length=32, name="user_name", unique=true)
+    * @Assert\NotBlank()
     */
      private $username;
      public function getUsername()
@@ -53,33 +58,47 @@ class User implements UserInterface, \Serializable
         $this->username = $username;
     }
    /**
-    * @ORM\Column(type="string", length=128, name="e_mail_address")
+    * @ORM\Column(type="string", length=128, name="e_mail_address", unique=true)
+    * @Assert\NotBlank()
+    * @Assert\Email()
     */
-     private $eMailAddress;
-     public function geteMailAddress()
+     private $email;
+     public function getEmail()
     {
-        return $this->e_mail_address;
+        return $this->email;
     }
 
-    public function seteMailAddress($e_mail_address)
+    public function setEmail($email)
     {
-        $this->$eMailAddress = $e_mail_address;
+        $this->email = $email;
     }
-   /**
-    * @ORM\Column(type="string", length=64, name="password")
-    */
+    /**
+     * @ORM\Column(type="string", length=64, name="password")
+     */
      private $password;
-     public function getpassword()
+     public function getPassword()
     {
         return $this->password;
     }
 
-    public function setpassword($password)
+    public function setPassword($password)
     {
         $this->password = $password;
     }
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
+    public function getPlainPassword()
+   {
+       return $this->plainPassword;
+   }
 
-
+   public function setPlainPassword($password)
+   {
+       $this->plainPassword = $password;
+   }
     public function getSalt()
     {
         // you *may* need a real salt depending on your encoder

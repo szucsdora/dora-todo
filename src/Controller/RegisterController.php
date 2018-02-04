@@ -2,27 +2,45 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\UserType;
+use App\Entity\User;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class RegisterController extends AbstractController
+class RegisterController extends Controller
 {
     /**
-     * @Route("/registration", name="registration")
+     * @Route("/register", name="user_registration")
      */
-    public function index()
+    public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
+        // 1) build the form
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
 
-        return $this->render('register.twig', [
-        ]);
-    }
-    /**
-     * @Route("/registration/new", name="registration_new")
-     */
-    public function register()
-    {
+        // 2) handle the submit (will only happen on POST)
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
 
-        return $this->render('register.twig', [
-        ]);
+            // 3) Encode the password (you could also do this via Doctrine listener)
+            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($password);
+            // 4) save the User!
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            // ... do any other work - like sending them an email, etc
+            // maybe set a "flash" success message for the user
+
+            return $this->redirectToRoute('todos');
+        }
+
+        return $this->render(
+            'register.twig',
+            array('form' => $form->createView())
+        );
     }
 }
