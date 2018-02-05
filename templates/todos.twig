@@ -43,16 +43,33 @@
               <td>{{ todo.deadline|date("m/d/Y") }}</td>
             </tr>
           {% endfor %}
-          <tr>
-            <td rowspan="2">Új feladat hozzáadása</td>
-            <td rowspan="2"><input type="text" placeholder="feladat-neve">
-            <td rowspan="1"><textarea class="form-control" name="feladatleiras" rows="3" placeholder="leiras"></textarea></td>
-          </tr>
-          <tr>
-            <td colspan="3">
-              <button type="text" class="btn btn-info pull-right">Listáz</button>
-            </td>
-          </tr>
+          <form name="todo" method="post">
+            <tr>
+              <td rowspan="2">Új feladat hozzáadása</td>
+              <td rowspan="2">
+                <input
+                    type="hidden"
+                    name="todo[userId]"
+                    value="{{ app.user.id }}">
+                <input
+                    type="text"
+                    name="todo[taskName]"
+                    placeholder="feladat-neve">
+              </td>
+              <td rowspan="1">
+                <textarea
+                    class="form-control"
+                    rows="3"
+                    placeholder="leiras">
+                </textarea>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <button type="submit" class="btn btn-info pull-right">Felvétel</button>
+              </td>
+            </tr>
+          </form>
         </table>
       </div>
     </div>

@@ -25,17 +25,16 @@ class Todo
         $this->id = $id;
     }
      /**
-      * @ORM\Column(type="integer", length=11, name="user_id"))
-      * @ORM\ManyToOne(targetEntity="User")
+      * @ORM\Column(type="integer", length=11, name="user_id")
       */
     private $userId;
     public function getUserId()
     {
-      return $this->user_id;
+      return $this->userId;
     }
-    public function setUserName($user_id)
+    public function setUserId($userId)
     {
-        $this->userName = $user_name;
+        $this->userId = $userId;
     }
     /**
      * @ORM\Column(type="string", length=64, name="task_name")
@@ -46,18 +45,18 @@ class Todo
      return $this->taskName;
    }
    public function setTaskName($task_name)
-    {
-        $this->taskName = $task_name;
-    }
+   {
+     $this->taskName = $task_name;
+   }
    /**
     * @ORM\Column(type="datetime", name="date")
     */
-  private $deadline;
-  public function getDeadline()
-  {
-    return $this->deadline;
-  }
-  public function setDeadline($deadline)
+    private $deadline;
+    public function getDeadline()
+    {
+      return $this->deadline;
+    }
+    public function setDeadline($deadline)
     {
         $this->deadline = $deadline;
     }
@@ -71,6 +70,6 @@ class Todo
   }
   public function setIsDone($isDone)
     {
-        $this->$isDone = $isDone;
+        $this->isDone = $isDone;
     }
 }
