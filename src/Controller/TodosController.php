@@ -58,9 +58,10 @@ class TodosController extends Controller
           ) {
           $em = $this->getDoctrine()->getManager();
           $deleteTodo = $em->getRepository(Todo::class)->find($todo->getId());
-
-          $em->remove($deleteTodo);
-          $em->flush();
+          if ($deleteTodo) {
+            $em->remove($deleteTodo);
+            $em->flush();
+          }
         }
 
         $user = $this->getUser();
