@@ -1,0 +1,14 @@
+<nav class="navbar navbar-default navbar-static-top navbar-inverse">
+  <div class="container">
+    <ul class="nav navbar-nav">
+      <li class="active">
+        <a class="navszoveg" href="/"><span class="todoicon glyphicon glyphicon-list-alt"></span> Dora To-do</a>
+      </li>
+      {% if app.user %}
+        <li class="">
+          <a class="navszoveg" href="/logout">Kilépés</a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>

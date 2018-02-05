@@ -12,8 +12,10 @@ class DefaultController extends AbstractController
      */
     public function index()
     {
-
-        return $this->render('login.twig', [
-        ]);
+      $securityContext = $this->container->get('security.authorization_checker');
+      if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+        return $this->redirectToRoute('todos');
+      }
+      return $this->render('login.twig', []);
     }
 }

@@ -26,7 +26,11 @@ class TodosController extends Controller
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid() && $todo->getTaskName() !== '') {
+        if ($form->isSubmitted() &&
+            $form->isValid() &&
+            $todo->getTaskName() !== '' &&
+            $todo->getAction() == 'new'
+          ) {
           $todo->setDeadline(new \DateTime('now'));
           $todo->setIsDone(false);
 
@@ -35,6 +39,29 @@ class TodosController extends Controller
           $em->flush();
         }
 
+        if ($form->isSubmitted() &&
+            $form->isValid() &&
+            $todo->getTaskName() !== '' &&
+            $todo->getAction() == 'update'
+          ) {
+          $em = $this->getDoctrine()->getManager();
+          $updateTodo = $em->getRepository(Todo::class)->find($todo->getId());
+
+          $updateTodo->setIsDone(true);
+          $em->flush();
+        }
+
+        if ($form->isSubmitted() &&
+            $form->isValid() &&
+            $todo->getTaskName() !== '' &&
+            $todo->getAction() == 'delete'
+          ) {
+          $em = $this->getDoctrine()->getManager();
+          $deleteTodo = $em->getRepository(Todo::class)->find($todo->getId());
+
+          $em->remove($deleteTodo);
+          $em->flush();
+        }
 
         $user = $this->getUser();
         $todos = $this->getDoctrine()

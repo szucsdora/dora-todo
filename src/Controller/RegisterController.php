@@ -16,6 +16,11 @@ class RegisterController extends Controller
      */
     public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
+
+        $securityContext = $this->container->get('security.authorization_checker');
+        if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+          return $this->redirectToRoute('todos');
+        }
         // 1) build the form
         $user = new User();
         $form = $this->createForm(UserType::class, $user);

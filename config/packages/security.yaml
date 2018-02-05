@@ -17,6 +17,10 @@ security:
             form_login:
                 login_path: login
                 check_path: login
+                default_target_path: todos
+            logout:
+                path:   /logout
+                target: /
             # activate different ways to authenticate
             # http_basic: ~
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
@@ -26,9 +30,6 @@ security:
 
         secured_area:
           http_basic: ~
-          logout:
-              path:   /logout
-              target: /
     access_control:
         # require ROLE_ADMIN for /admin*
         - { path: ^/todos, roles: ROLE_USER }

@@ -49,7 +49,19 @@ class Todo
      $this->taskName = $task_name;
    }
    /**
-    * @ORM\Column(type="datetime", name="date")
+    * @ORM\Column(type="string", length=256, name="description")
+    */
+    private $taskDescription;
+    public function getTaskDescription()
+    {
+      return $this->taskDescription;
+    }
+    public function setTaskDescription($taskDescription)
+    {
+      $this->taskDescription = $taskDescription;
+    }
+   /**
+    * @ORM\Column(type="datetime", name="deadline")
     */
     private $deadline;
     public function getDeadline()
@@ -72,4 +84,14 @@ class Todo
     {
         $this->isDone = $isDone;
     }
+
+    private $action;
+    public function getAction()
+    {
+      return $this->action;
+    }
+    public function setAction($action)
+      {
+          $this->action = $action;
+      }
 }

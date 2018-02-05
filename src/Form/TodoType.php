@@ -16,8 +16,11 @@ class TodoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('id', NumberType::class)
             ->add('userId', NumberType::class)
+            ->add('action', TextType::class)
             ->add('taskName', TextType::class)
+            ->add('taskDescription', TextType::class)
             ->add('deadline', DateType::class)
             ->add('isDone', CheckboxType::class)
         ;
