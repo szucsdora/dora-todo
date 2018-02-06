@@ -16,31 +16,28 @@ class RegisterController extends Controller
      */
     public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
-
+        //ha a user már be van lépve írányítsuk át a todoshoz
         $securityContext = $this->container->get('security.authorization_checker');
         if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
           return $this->redirectToRoute('todos');
         }
-        // 1) build the form
+        // 1) feépítjük a felhasználó űrlapot
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
-        // 2) handle the submit (will only happen on POST)
+        // 2) az ürlap submitjának/postjának kezelése
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // 3) Encode the password (you could also do this via Doctrine listener)
+            // 3) felhasználó jelshzavának a titkosítása
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
-            // 4) save the User!
+            // 4) felhasználó mentése
             $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            $em->persist($user); //új felhasználó mentésének előkészítése
+            $em->flush(); //a várakozó adatbázis művelet végrehajtása
 
-            // ... do any other work - like sending them an email, etc
-            // maybe set a "flash" success message for the user
-
-            return $this->redirectToRoute('todos');
+            return $this->redirectToRoute('login');
         }
 
         return $this->render(

@@ -1,12 +1,12 @@
 security:
     encoders:
         App\Entity\User:
-            algorithm: bcrypt
+            algorithm: bcrypt #felhasználó jelszó kodolása
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         our_db_provider:
           entity:
-            class: App\Entity\User
+            class: App\Entity\User #felhasználó entitás ami felel a bejelentkeztetésért
             property: username
     firewalls:
         dev:
@@ -14,11 +14,11 @@ security:
             security: false
         main:
             anonymous: ~
-            form_login:
+            form_login: #beléptető form
                 login_path: login
                 check_path: login
                 default_target_path: todos
-            logout:
+            logout: #kiléptetés
                 path:   /logout
                 target: /
             # activate different ways to authenticate
@@ -30,6 +30,6 @@ security:
 
         secured_area:
           http_basic: ~
-    access_control:
+    access_control: #todos elérésének a limitálása authentikált felhasználók számára
         # require ROLE_ADMIN for /admin*
         - { path: ^/todos, roles: ROLE_USER }

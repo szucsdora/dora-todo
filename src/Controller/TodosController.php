@@ -17,13 +17,14 @@ class TodosController extends Controller
      */
     public function index(Request $request)
     {
+        //nem belépet user ellenőrzése
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        // 1) build the form
+        // 1) űrlap felépítése
         $todo = new Todo();
         $form = $this->createForm(TodoType::class, $todo);
 
-        // 2) handle the submit (will only happen on POST)
+        // 2) submit kezelése
         $form->handleRequest($request);
 
         if ($form->isSubmitted() &&
@@ -41,10 +42,10 @@ class TodosController extends Controller
 
         if ($form->isSubmitted() &&
             $form->isValid() &&
-            $todo->getTaskName() !== '' &&
             $todo->getAction() == 'update'
           ) {
           $em = $this->getDoctrine()->getManager();
+          //megkeressűk a feladatot amit készre állítunk
           $updateTodo = $em->getRepository(Todo::class)->find($todo->getId());
 
           $updateTodo->setIsDone(true);
@@ -53,18 +54,19 @@ class TodosController extends Controller
 
         if ($form->isSubmitted() &&
             $form->isValid() &&
-            $todo->getTaskName() !== '' &&
             $todo->getAction() == 'delete'
           ) {
           $em = $this->getDoctrine()->getManager();
+          //megkeresi a törlendő feladatot
           $deleteTodo = $em->getRepository(Todo::class)->find($todo->getId());
-          if ($deleteTodo) {
+          if ($deleteTodo) { //ha megtalálta akkor törli
             $em->remove($deleteTodo);
             $em->flush();
           }
         }
 
         $user = $this->getUser();
+        //belépet felhasználó feladatainak a lekérése
         $todos = $this->getDoctrine()
             ->getRepository(Todo::class)
             ->findBy(['userId' => $user->getId()]);

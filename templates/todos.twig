@@ -67,7 +67,7 @@
                   </button>
                 </form>
               </td>
-              <td>{{ todo.deadline|date("m/d/Y") }}</td>
+              <td>{{ todo.deadline|date("d/m/Y") }}</td>
             </tr>
           {% endfor %}
           <form name="todo" method="post">

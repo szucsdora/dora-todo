@@ -19,6 +19,11 @@ class SecurityController extends Controller
 
           // last username entered by the user
           $lastUsername = $authUtils->getLastUsername();
+          //ha a user már be van lépve írányítsuk át a todoshoz
+          $securityContext = $this->container->get('security.authorization_checker');
+          if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('todos');
+          }
 
           return $this->render('login.twig', array(
               'last_username' => $lastUsername,
