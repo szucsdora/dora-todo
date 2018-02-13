@@ -7,17 +7,17 @@
         <h3>{{ app.user.username }} To-do listája</h3>
       </div>
       <div class="panel-body">
-        <table class="table table-striped table-full-width">
+        <table class="table table-striped table-full-width todo-table">
           <tr>
-            <th>Fealadatok</th>
-            <th>Kész?</th>
-            <th>Törlés</th>
-            <th>Létrehozva</th>
+            <th colspan="2">Fealadatok</th>
+            <th colspan="2">Kész?</th>
+            <th colspan="2">Törlés</th>
+            <th colspan="2">Létrehozva</th>
           </tr>
           {% for todo in todos %}
             <tr>
-              <td>{{ todo.taskName }} <br> {{ todo.taskDescription }}</td>
-              <td>
+              <td colspan="2">{{ todo.taskName }} <br> {{ todo.taskDescription }}</td>
+              <td colspan="2">
                 {% if todo.isDone == false %}
                   <form name="todo" method="post">
                     <input
@@ -51,7 +51,7 @@
                   Kész
                 {% endif %}
               </td>
-              <td>
+              <td colspan="2">
                 <form name="todo" method="post">
                   <input
                       type="hidden"
@@ -67,13 +67,13 @@
                   </button>
                 </form>
               </td>
-              <td>{{ todo.deadline|date("d/m/Y") }}</td>
+              <td colspan="2">{{ todo.deadline|date("d/m/Y") }}</td>
             </tr>
           {% endfor %}
           <form name="todo" method="post">
             <tr>
-              <td rowspan="2">Új feladat hozzáadása</td>
-              <td rowspan="2">
+              <td>Új feladat hozzáadása</td>
+              <td rowspan="2" colspan="1">
                 <input
                     type="hidden"
                     name="todo[action]"
@@ -87,7 +87,7 @@
                     name="todo[taskName]"
                     placeholder="feladat-neve">
               </td>
-              <td rowspan="1">
+              <td rowspan="2" colspan="4">
                 <textarea
                     class="form-control"
                     rows="3"
@@ -95,9 +95,10 @@
                     placeholder="leiras">
                 </textarea>
               </td>
-            </tr>
-            <tr>
-              <td colspan="3">
+              <td rowspan="2" colspan="2">
+                Határidő: <input type="text" name="todo[plainDeadline]" id="datepicker">
+                </br>
+                </br>
                 <button type="submit" class="btn btn-info pull-right">Felvétel</button>
               </td>
             </tr>
@@ -107,5 +108,10 @@
     </div>
   </div>
 </div>
+<script>
+$( function() {
 
+  $( "#datepicker" ).datepicker({dateFormat: "mm/dd/yy"});
+} );
+</script>
 {% endblock %}

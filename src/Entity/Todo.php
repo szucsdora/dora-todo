@@ -72,6 +72,15 @@ class Todo
     {
         $this->deadline = $deadline;
     }
+    private $plainDeadline;
+    public function getPlainDeadline()
+    {
+      return $this->plainDeadline;
+    }
+    public function setPlainDeadline($deadline)
+    {
+        $this->plainDeadline = $deadline;
+    }
    /**
     * @ORM\Column(type="boolean", length=1, name="is_done")
     */

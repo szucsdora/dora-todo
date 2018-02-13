@@ -8,7 +8,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class TodoType extends AbstractType
@@ -21,7 +20,7 @@ class TodoType extends AbstractType
             ->add('action', TextType::class)
             ->add('taskName', TextType::class)
             ->add('taskDescription', TextType::class)
-            ->add('deadline', DateType::class)
+            ->add('plainDeadline', TextType::class)
             ->add('isDone', CheckboxType::class)
         ;
     }

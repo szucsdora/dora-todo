@@ -32,7 +32,7 @@ class TodosController extends Controller
             $todo->getTaskName() !== '' &&
             $todo->getAction() == 'new'
           ) {
-          $todo->setDeadline(new \DateTime('now'));
+          $todo->setDeadline(new \DateTime($todo->getPlainDeadline()));
           $todo->setIsDone(false);
 
           $em = $this->getDoctrine()->getManager();
